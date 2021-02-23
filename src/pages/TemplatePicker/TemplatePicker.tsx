@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import Container from "../../components/Container/Container";
 import TemplateList from "./TemplateList";
+import ConfirmationDialog from "./ConfirmationDialog";
 
 interface Props {}
 
@@ -14,10 +15,16 @@ const Title = styled.h1`
 `;
 
 const TemplatePicker = (props: Props) => {
+  const [modalOpen, setModalOpen] = React.useState(true);
+
   return (
     <Container>
       <Title>Pick a template</Title>
       <TemplateList />
+      <ConfirmationDialog
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </Container>
   );
 };
