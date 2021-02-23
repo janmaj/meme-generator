@@ -10,6 +10,7 @@ const StyledButton = styled.button`
   color: white;
   text-transform: uppercase;
   font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
   &:hover {

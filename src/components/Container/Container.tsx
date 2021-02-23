@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 interface Props {
   children?: React.ReactNode;
+  className?: string;
 }
 
 const ContainerDiv = styled.div`
@@ -10,8 +11,8 @@ const ContainerDiv = styled.div`
   margin: auto;
 `;
 
-const Container = ({ children }: Props) => {
-  return <ContainerDiv>{children}</ContainerDiv>;
+const Container = ({ children, className }: Props) => {
+  return <ContainerDiv className={className}>{children}</ContainerDiv>;
 };
 
 export default Container;

@@ -1,9 +1,93 @@
 import * as React from "react";
+import styled from "styled-components";
+import { Template } from "../TemplatePicker/TemplatePicker";
+import { useHistory } from "react-router-dom";
 
-interface Props {}
+import InputField from "../../components/InputField/InputField";
+import Container from "../../components/Container/Container";
+import Button from "../../components/Button/Button";
 
-const Editor = (props: Props) => {
-  return <h1>Editor page</h1>;
+const PaddingContainer = styled(Container)`
+  padding-bottom: 2em;
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 4rem;
+  margin: 20px;
+`;
+
+const Img = styled.img`
+  margin: auto;
+  display: block;
+  max-height: 50vh;
+  max-width: 50vw;
+  object-fit: contain;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+`;
+
+const StyledInput = styled(InputField)`
+  display: inline-block;
+  margin: auto;
+`;
+
+interface Props {
+  activeTemplate: Template | null;
+}
+
+const Editor = ({ activeTemplate }: Props) => {
+  const [inputValues, setInputValues] = React.useState<string[]>([]);
+  const history = useHistory();
+
+  React.useEffect(() => {
+    if (activeTemplate) {
+      const values = [];
+      for (let i = 0; i < activeTemplate.boxCount!; i++) {
+        values.push("");
+      }
+      setInputValues(values);
+    } else {
+      history.replace("/");
+    }
+  }, [activeTemplate, history]);
+
+  const handleSubmit = () => {};
+
+  const inputs = [];
+  if (activeTemplate) {
+    for (let i = 0; i < activeTemplate.boxCount!; i++) {
+      inputs.push({
+        value: inputValues[i],
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+          setInputValues((prevValues) => {
+            const newValues = [...prevValues];
+            newValues[i] = e.target.value;
+            return newValues;
+          }),
+        label: `caption ${i + 1}: `,
+      });
+    }
+  }
+  return (
+    <PaddingContainer>
+      <Title>Create your meme</Title>
+      <Img src={activeTemplate?.url} alt="meme" />
+      <InputContainer>
+        {inputs.map(({ value, onChange, label }) => (
+          <StyledInput value={value} onChange={onChange} label={label} />
+        ))}
+        <Button>Create</Button>
+      </InputContainer>
+    </PaddingContainer>
+  );
 };
 
 export default Editor;

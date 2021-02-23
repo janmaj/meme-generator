@@ -21,7 +21,11 @@ function App() {
           exact
           render={() => <TemplatePicker onPick={setActiveTemplate} />}
         />
-        <Route path="/editor" exact component={Editor} />
+        <Route
+          path="/editor"
+          exact
+          render={() => <Editor activeTemplate={activeTemplate} />}
+        />
       </Switch>
     </div>
   );
