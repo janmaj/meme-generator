@@ -21,11 +21,12 @@ const Img = styled.img`
 
 interface Props {
   imageUrl: string;
+  onClick?: () => void;
 }
 
-const TemplateTile = ({ imageUrl }: Props) => {
+const TemplateTile = ({ imageUrl, onClick }: Props) => {
   return (
-    <Tile>
+    <Tile onClick={onClick}>
       <Img alt="meme template" src={imageUrl} />
     </Tile>
   );

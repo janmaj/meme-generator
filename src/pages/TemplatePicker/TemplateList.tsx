@@ -12,13 +12,18 @@ const TemplateContainer = styled.div`
 
 interface Props {
   templates: Template[];
+  onSelect?: (t: Template) => void;
 }
 
-const TemplateList = ({ templates }: Props) => {
+const TemplateList = ({ templates, onSelect }: Props) => {
   return (
     <TemplateContainer>
       {templates.map((template) => (
-        <TemplateTile imageUrl={template.url} />
+        <TemplateTile
+          imageUrl={template.url}
+          key={template.id}
+          onClick={() => onSelect?.(template)}
+        />
       ))}
     </TemplateContainer>
   );

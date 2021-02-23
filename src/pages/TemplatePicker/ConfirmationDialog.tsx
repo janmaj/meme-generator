@@ -14,6 +14,7 @@ const Img = styled.img`
   height: 100%;
   width: 100%;
   object-fit: contain;
+  border: 1px solid black;
 `;
 
 const ButtonContainer = styled.div`
@@ -25,13 +26,14 @@ const ButtonContainer = styled.div`
 interface Props {
   open: boolean;
   onClose: () => void;
+  imageUrl?: string;
 }
 
-const ConfirmationDialog = ({ open, onClose }: Props) => {
+const ConfirmationDialog = ({ open, onClose, imageUrl }: Props) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Header>Do you want to use this template?</Header>
-      <Img src="https://i.imgflip.com/1bij.jpg" />
+      <Img src={imageUrl || ""} />
       <ButtonContainer>
         <Button color="secondary" onClick={onClose}>
           Cancel

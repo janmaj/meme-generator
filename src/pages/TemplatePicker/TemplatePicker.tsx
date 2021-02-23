@@ -8,7 +8,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import { fetchAll } from "../../api";
 
 export interface Template {
-  id?: number;
+  id: number;
   name: string;
   url: string;
 }
@@ -22,16 +22,23 @@ const Title = styled.h1`
   margin: 20px;
 `;
 
+const CenteredSpinner = styled(Spinner)`
+  margin: auto;
+`;
+
 const TemplatePicker = (props: Props) => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [templates, setTemplates] = React.useState<Template[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const [
+    selectedTemplate,
+    setSelectedTemplate,
+  ] = React.useState<Template | null>(null);
 
   React.useEffect(() => {
     const fetchTemplates = async () => {
       setLoading(true);
       const fetchedTemplates = await fetchAll();
-      console.log(fetchedTemplates);
 
       setTemplates(fetchedTemplates);
       setLoading(false);
@@ -40,17 +47,24 @@ const TemplatePicker = (props: Props) => {
     fetchTemplates();
   }, []);
 
+  const handleSelectTemplate = (template: Template) => {
+    setSelectedTemplate(template);
+    setModalOpen(true);
+    console.log("selected");
+  };
+
   return (
     <Container>
       <Title>Pick a template</Title>
       {loading ? (
-        <Spinner size={200} />
+        <CenteredSpinner size={200} />
       ) : (
-        <TemplateList templates={templates} />
+        <TemplateList templates={templates} onSelect={handleSelectTemplate} />
       )}
       <ConfirmationDialog
         open={modalOpen}
         onClose={() => setModalOpen(false)}
+        imageUrl={selectedTemplate?.url}
       />
     </Container>
   );

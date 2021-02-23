@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 
 const Overlay = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -11,7 +11,7 @@ const Overlay = styled.div`
 `;
 
 const ModalWindow = styled.div`
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
