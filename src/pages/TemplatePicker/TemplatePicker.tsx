@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 import Container from "../../components/Container/Container";
 import TemplateList from "./TemplateList";
@@ -13,7 +14,9 @@ export interface Template {
   url: string;
 }
 
-interface Props {}
+interface Props {
+  onPick?: (t: Template) => void;
+}
 
 const Title = styled.h1`
   text-align: center;
@@ -26,7 +29,7 @@ const CenteredSpinner = styled(Spinner)`
   margin: auto;
 `;
 
-const TemplatePicker = (props: Props) => {
+const TemplatePicker = ({ onPick }: Props) => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [templates, setTemplates] = React.useState<Template[]>([]);
   const [loading, setLoading] = React.useState(false);
@@ -34,6 +37,7 @@ const TemplatePicker = (props: Props) => {
     selectedTemplate,
     setSelectedTemplate,
   ] = React.useState<Template | null>(null);
+  const history = useHistory();
 
   React.useEffect(() => {
     const fetchTemplates = async () => {
@@ -53,6 +57,11 @@ const TemplatePicker = (props: Props) => {
     console.log("selected");
   };
 
+  const handleConfirm = () => {
+    onPick?.(selectedTemplate!);
+    history.push("/editor");
+  };
+
   return (
     <Container>
       <Title>Pick a template</Title>
@@ -64,6 +73,7 @@ const TemplatePicker = (props: Props) => {
       <ConfirmationDialog
         open={modalOpen}
         onClose={() => setModalOpen(false)}
+        onConfirm={handleConfirm}
         imageUrl={selectedTemplate?.url}
       />
     </Container>

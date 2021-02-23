@@ -11,10 +11,9 @@ const Header = styled.p`
 `;
 
 const Img = styled.img`
-  height: 100%;
-  width: 100%;
   object-fit: contain;
-  border: 1px solid black;
+  max-width: 50vh;
+  width: 100%;
 `;
 
 const ButtonContainer = styled.div`
@@ -26,10 +25,11 @@ const ButtonContainer = styled.div`
 interface Props {
   open: boolean;
   onClose: () => void;
+  onConfirm: () => void;
   imageUrl?: string;
 }
 
-const ConfirmationDialog = ({ open, onClose, imageUrl }: Props) => {
+const ConfirmationDialog = ({ open, onClose, imageUrl, onConfirm }: Props) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Header>Do you want to use this template?</Header>
@@ -38,7 +38,7 @@ const ConfirmationDialog = ({ open, onClose, imageUrl }: Props) => {
         <Button color="secondary" onClick={onClose}>
           Cancel
         </Button>
-        <Button>Let's go!</Button>
+        <Button onClick={onConfirm}>Let's go!</Button>
       </ButtonContainer>
     </Modal>
   );
