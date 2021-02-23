@@ -4,6 +4,14 @@ import styled from "styled-components";
 import Container from "../../components/Container/Container";
 import TemplateList from "./TemplateList";
 import ConfirmationDialog from "./ConfirmationDialog";
+import Spinner from "../../components/Spinner/Spinner";
+import { fetchAll } from "../../api";
+
+export interface Template {
+  id?: number;
+  name: string;
+  url: string;
+}
 
 interface Props {}
 
@@ -15,12 +23,31 @@ const Title = styled.h1`
 `;
 
 const TemplatePicker = (props: Props) => {
-  const [modalOpen, setModalOpen] = React.useState(true);
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [templates, setTemplates] = React.useState<Template[]>([]);
+  const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    const fetchTemplates = async () => {
+      setLoading(true);
+      const fetchedTemplates = await fetchAll();
+      console.log(fetchedTemplates);
+
+      setTemplates(fetchedTemplates);
+      setLoading(false);
+    };
+
+    fetchTemplates();
+  }, []);
 
   return (
     <Container>
       <Title>Pick a template</Title>
-      <TemplateList />
+      {loading ? (
+        <Spinner size={200} />
+      ) : (
+        <TemplateList templates={templates} />
+      )}
       <ConfirmationDialog
         open={modalOpen}
         onClose={() => setModalOpen(false)}

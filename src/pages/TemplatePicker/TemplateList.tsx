@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import { Template } from "./TemplatePicker";
 
 import TemplateTile from "./TemplateTile";
 
@@ -9,19 +10,16 @@ const TemplateContainer = styled.div`
   gap: 15px;
 `;
 
-interface Props {}
+interface Props {
+  templates: Template[];
+}
 
-const TemplateList = (props: Props) => {
+const TemplateList = ({ templates }: Props) => {
   return (
     <TemplateContainer>
-      <TemplateTile imageUrl="https://i.imgflip.com/1bij.jpg" />
-      <TemplateTile imageUrl="https://i.imgflip.com/26am.jpg" />
-      <TemplateTile imageUrl="https://i.imgflip.com/1bij.jpg" />
-      <TemplateTile imageUrl="https://i.imgflip.com/26am.jpg" />
-      <TemplateTile imageUrl="https://i.imgflip.com/1bij.jpg" />
-      <TemplateTile imageUrl="https://i.imgflip.com/26am.jpg" />
-      <TemplateTile imageUrl="https://i.imgflip.com/1bij.jpg" />
-      <TemplateTile imageUrl="https://i.imgflip.com/26am.jpg" />
+      {templates.map((template) => (
+        <TemplateTile imageUrl={template.url} />
+      ))}
     </TemplateContainer>
   );
 };

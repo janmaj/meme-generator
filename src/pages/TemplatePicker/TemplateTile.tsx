@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Tile = styled.article`
   aspect-ratio: 1/1;
   box-shadow: 5px 5px 5px lightgray;
-  border: 1px solid lightgrey;
+  border: 1px solid black;
   background-color: #f1f1f1;
   transition: all 0.4s ease;
   &:hover {
