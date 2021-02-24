@@ -6,6 +6,8 @@ import { useHistory } from "react-router-dom";
 import InputField from "../../components/InputField/InputField";
 import Container from "../../components/Container/Container";
 import Button from "../../components/Button/Button";
+import ResultModal from "./ResultModal";
+import { addCaption } from "../../api";
 
 const PaddingContainer = styled(Container)`
   padding-bottom: 2em;
@@ -45,6 +47,7 @@ interface Props {
 
 const Editor = ({ activeTemplate }: Props) => {
   const [inputValues, setInputValues] = React.useState<string[]>([]);
+  const [receivedUrl, setReceivedUrl] = React.useState<string | null>(null);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -59,7 +62,10 @@ const Editor = ({ activeTemplate }: Props) => {
     }
   }, [activeTemplate, history]);
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    const url = await addCaption(activeTemplate!.id!, inputValues);
+    setReceivedUrl(url);
+  };
 
   const inputs = [];
   if (activeTemplate) {
@@ -73,20 +79,38 @@ const Editor = ({ activeTemplate }: Props) => {
             return newValues;
           }),
         label: `caption ${i + 1}: `,
+        key: i,
       });
     }
   }
   return (
-    <PaddingContainer>
-      <Title>Create your meme</Title>
-      <Img src={activeTemplate?.url} alt="meme" />
-      <InputContainer>
-        {inputs.map(({ value, onChange, label }) => (
-          <StyledInput value={value} onChange={onChange} label={label} />
-        ))}
-        <Button>Create</Button>
-      </InputContainer>
-    </PaddingContainer>
+    <>
+      <PaddingContainer>
+        <Title>Create your meme</Title>
+        <Img src={activeTemplate?.url} alt="meme" />
+        <InputContainer>
+          {inputs.map(({ value, onChange, label, key }) => (
+            <StyledInput
+              value={value}
+              onChange={onChange}
+              label={label}
+              key={key}
+            />
+          ))}
+          <Button
+            disabled={inputValues.filter((v) => v.length !== 0).length === 0}
+            onClick={handleSubmit}
+          >
+            Create
+          </Button>
+        </InputContainer>
+      </PaddingContainer>
+      <ResultModal
+        open={receivedUrl !== null}
+        imageUrl={receivedUrl!}
+        onClose={() => setReceivedUrl(null)}
+      />
+    </>
   );
 };
 

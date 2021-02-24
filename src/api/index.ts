@@ -10,3 +10,19 @@ export const fetchAll = async () => {
     boxCount: meme["box_count"],
   })) as Template[];
 };
+
+export const addCaption = async (templateId: number, captions: string[]) => {
+  const url = `https://cors-anywhere.herokuapp.com/https://api.imgflip.com/caption_image`;
+  let queryParams = `?template_id=${templateId}&username=JanMajchrzak&password=racecarera`;
+  captions.forEach((caption, idx) => {
+    queryParams = queryParams + `&boxes[${idx}][text]=${caption}`;
+  });
+
+  const response = await axios.post(url + queryParams);
+  console.log(response);
+
+  if (!response.data.success) {
+    throw new Error();
+  }
+  return response.data.data.url;
+};

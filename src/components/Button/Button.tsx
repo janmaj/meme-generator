@@ -16,6 +16,9 @@ const StyledButton = styled.button`
   &:hover {
     background-color: #31629e;
   }
+  &:disabled {
+    background-color: #b6b6b6;
+  }
   ${(props) =>
     props.color === "secondary" &&
     css`
@@ -31,11 +34,12 @@ interface Props {
   onClick?: () => void;
   variant?: "contained" | "outlined";
   color?: "primary" | "secondary";
+  disabled?: boolean;
 }
 
-const Button = ({ children, onClick, variant, color }: Props) => {
+const Button = ({ children, onClick, variant, color, disabled }: Props) => {
   return (
-    <StyledButton color={color} onClick={onClick}>
+    <StyledButton color={color} onClick={onClick} disabled={disabled}>
       {children}
     </StyledButton>
   );
