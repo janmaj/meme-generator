@@ -108,7 +108,7 @@ const Editor = ({ activeTemplate }: Props) => {
       <ResultModal
         open={receivedUrl !== null}
         imageUrl={receivedUrl!}
-        onClose={() => setReceivedUrl(null)}
+        onClose={() => {}}
       />
     </>
   );

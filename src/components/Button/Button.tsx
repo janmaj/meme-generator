@@ -35,11 +35,24 @@ interface Props {
   variant?: "contained" | "outlined";
   color?: "primary" | "secondary";
   disabled?: boolean;
+  className?: string;
 }
 
-const Button = ({ children, onClick, variant, color, disabled }: Props) => {
+const Button = ({
+  children,
+  onClick,
+  variant,
+  color,
+  disabled,
+  className,
+}: Props) => {
   return (
-    <StyledButton color={color} onClick={onClick} disabled={disabled}>
+    <StyledButton
+      color={color}
+      onClick={onClick}
+      disabled={disabled}
+      className={className}
+    >
       {children}
     </StyledButton>
   );
