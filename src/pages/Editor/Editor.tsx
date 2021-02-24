@@ -18,14 +18,24 @@ const Title = styled.h1`
   font-family: "Titillium Web", sans-serif;
   font-size: 4rem;
   margin: 20px;
+
+  @media (max-width: 960px) {
+    font-size: 3rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 2rem;
+  }
 `;
 
 const Img = styled.img`
+  object-fit: contain;
+  max-height: 50vh;
+  min-height: 10em;
+  width: 100%;
   margin: auto;
   display: block;
-  max-height: 50vh;
-  max-width: 50vw;
-  object-fit: contain;
+  border: 1px solid gray;
+  padding: 10px 15px;
 `;
 
 const InputContainer = styled.div`

@@ -24,6 +24,13 @@ const Title = styled.h1`
   font-family: "Titillium Web", sans-serif;
   font-size: 4rem;
   margin: 20px;
+
+  @media (max-width: 960px) {
+    font-size: 3rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 2rem;
+  }
 `;
 
 const CenteredSpinner = styled(Spinner)`

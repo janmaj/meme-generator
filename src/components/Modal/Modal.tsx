@@ -18,6 +18,14 @@ const ModalWindow = styled.div`
   background-color: white;
   padding: 20px 30px;
   border-radius: 30px;
+
+  @media (max-width: 960px) {
+    width: 90vw;
+    min-height: 10em;
+  }
+  @media (max-width: 400px) {
+    padding: 10px 15px;
+  }
 `;
 
 interface Props {

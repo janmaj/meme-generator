@@ -12,8 +12,12 @@ const Header = styled.p`
 
 const Img = styled.img`
   object-fit: contain;
-  max-width: 50vh;
+  max-height: 50vh;
+  min-height: 10em;
   width: 100%;
+  margin: auto;
+  display: block;
+  border: 1px solid gray;
 `;
 
 const StyledButton = styled(Button)`

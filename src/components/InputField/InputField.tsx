@@ -6,6 +6,11 @@ const Label = styled.label`
   align-items: center;
   gap: 10px;
   font-size: 1.25rem;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 0px;
+  }
 `;
 
 const Input = styled.input<{ error?: boolean }>`
