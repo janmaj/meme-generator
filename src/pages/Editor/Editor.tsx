@@ -8,6 +8,7 @@ import Container from "../../components/Container/Container";
 import Button from "../../components/Button/Button";
 import ResultModal from "./ResultModal";
 import { addCaption, saveMeme } from "../../api";
+import Snackbar from "../../components/Snackbar/Snackbar";
 
 const PaddingContainer = styled(Container)`
   padding-bottom: 2em;
@@ -58,6 +59,7 @@ interface Props {
 const Editor = ({ activeTemplate }: Props) => {
   const [inputValues, setInputValues] = React.useState<string[]>([]);
   const [receivedUrl, setReceivedUrl] = React.useState<string | null>(null);
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -73,13 +75,21 @@ const Editor = ({ activeTemplate }: Props) => {
   }, [activeTemplate, history]);
 
   const handleSubmit = async () => {
-    const url = await addCaption(activeTemplate!.id!, inputValues);
-    setReceivedUrl(url);
+    try {
+      const url = await addCaption(activeTemplate!.id!, inputValues);
+      setReceivedUrl(url);
+    } catch {
+      setSnackbarOpen(true);
+    }
   };
 
   const handleSave = async () => {
-    if (receivedUrl) {
-      await saveMeme(receivedUrl);
+    try {
+      if (receivedUrl) {
+        await saveMeme(receivedUrl);
+      }
+    } catch {
+      setSnackbarOpen(true);
     }
   };
 
@@ -128,6 +138,9 @@ const Editor = ({ activeTemplate }: Props) => {
         onClose={() => {}}
         onSave={handleSave}
       />
+      <Snackbar open={snackbarOpen} onClose={() => setSnackbarOpen(false)}>
+        Something went wrong. Try again later
+      </Snackbar>
     </>
   );
 };

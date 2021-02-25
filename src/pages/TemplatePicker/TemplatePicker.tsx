@@ -7,6 +7,7 @@ import TemplateList from "./TemplateList";
 import ConfirmationDialog from "./ConfirmationDialog";
 import Spinner from "../../components/Spinner/Spinner";
 import { fetchAllTemplates } from "../../api";
+import Snackbar from "../../components/Snackbar/Snackbar";
 
 export interface Template {
   id: number;
@@ -39,6 +40,7 @@ const CenteredSpinner = styled(Spinner)`
 
 const TemplatePicker = ({ onPick }: Props) => {
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
   const [templates, setTemplates] = React.useState<Template[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [
@@ -50,9 +52,13 @@ const TemplatePicker = ({ onPick }: Props) => {
   React.useEffect(() => {
     const fetchTemplates = async () => {
       setLoading(true);
-      const fetchedTemplates = await fetchAllTemplates();
+      try {
+        const fetchedTemplates = await fetchAllTemplates();
+        setTemplates(fetchedTemplates);
+      } catch (error) {
+        setSnackbarOpen(true);
+      }
 
-      setTemplates(fetchedTemplates);
       setLoading(false);
     };
 
@@ -70,20 +76,25 @@ const TemplatePicker = ({ onPick }: Props) => {
   };
 
   return (
-    <Container>
-      <Title>Pick a template</Title>
-      {loading ? (
-        <CenteredSpinner size={200} />
-      ) : (
-        <TemplateList templates={templates} onSelect={handleSelectTemplate} />
-      )}
-      <ConfirmationDialog
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onConfirm={handleConfirm}
-        imageUrl={selectedTemplate?.url}
-      />
-    </Container>
+    <>
+      <Container>
+        <Title>Pick a template</Title>
+        {loading ? (
+          <CenteredSpinner size={200} />
+        ) : (
+          <TemplateList templates={templates} onSelect={handleSelectTemplate} />
+        )}
+        <ConfirmationDialog
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          onConfirm={handleConfirm}
+          imageUrl={selectedTemplate?.url}
+        />
+      </Container>
+      <Snackbar open={snackbarOpen} onClose={() => setSnackbarOpen(false)}>
+        An error ocurred. Try again later
+      </Snackbar>
+    </>
   );
 };
 

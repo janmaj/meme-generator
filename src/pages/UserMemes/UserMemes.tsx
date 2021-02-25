@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Container from "../../components/Container/Container";
 import { fetchAllMemes } from "../../api";
 import Spinner from "../../components/Spinner/Spinner";
+import Snackbar from "../../components/Snackbar/Snackbar";
 
 const Title = styled.h1`
   text-align: center;
@@ -45,6 +46,7 @@ export interface Meme {
 const UserMemes = () => {
   const [memes, setMemes] = React.useState<Meme[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
   React.useEffect(() => {
     const fetchMemes = async () => {
@@ -58,18 +60,23 @@ const UserMemes = () => {
   }, []);
 
   return (
-    <Container>
-      <Title>Browse user created memes</Title>
-      <MemeContainer>
-        {loading && <Spinner size={300} />}
-        {memes.length === 0 && !loading && (
-          <Message>No memes available :(</Message>
-        )}
-        {memes.map((meme) => (
-          <Img src={meme.url} alt={meme.id} key={meme.id} />
-        ))}
-      </MemeContainer>
-    </Container>
+    <>
+      <Container>
+        <Title>Browse user created memes</Title>
+        <MemeContainer>
+          {loading && <Spinner size={300} />}
+          {memes.length === 0 && !loading && (
+            <Message>No memes available :(</Message>
+          )}
+          {memes.map((meme) => (
+            <Img src={meme.url} alt={meme.id} key={meme.id} />
+          ))}
+        </MemeContainer>
+      </Container>
+      <Snackbar open={snackbarOpen} onClose={() => setSnackbarOpen(false)}>
+        Something went wrong. Try again later
+      </Snackbar>
+    </>
   );
 };
 
