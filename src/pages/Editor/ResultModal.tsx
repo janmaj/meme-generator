@@ -27,15 +27,16 @@ const StyledButton = styled(Button)`
 
 interface Props {
   imageUrl: string;
+  imageAlt: string;
   open: boolean;
   onClose: () => void;
 }
 
-const ResultModal = ({ imageUrl, open, onClose }: Props) => {
+const ResultModal = ({ imageUrl, open, onClose, imageAlt }: Props) => {
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} data-testid="result-modal">
       <Header>Your meme is ready</Header>
-      <Img src={imageUrl} alt="meme" />
+      <Img src={imageUrl} alt={imageAlt} />
       <a href="/">
         <StyledButton>Go back to main page</StyledButton>
       </a>

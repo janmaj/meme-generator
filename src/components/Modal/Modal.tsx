@@ -37,7 +37,7 @@ interface Props {
 const Modal = ({ children, open = true, onClose }: Props) => {
   return open ? (
     <>
-      <Overlay onClick={onClose} />
+      <Overlay onClick={onClose} data-testid="overlay" />
       <ModalWindow>{children}</ModalWindow>
     </>
   ) : null;

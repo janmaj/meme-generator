@@ -118,6 +118,7 @@ const Editor = ({ activeTemplate }: Props) => {
       <ResultModal
         open={receivedUrl !== null}
         imageUrl={receivedUrl!}
+        imageAlt={activeTemplate?.name || ""}
         onClose={() => {}}
       />
     </>
