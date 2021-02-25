@@ -64,7 +64,7 @@ const UserMemes = () => {
       <Container>
         <Title>Browse user created memes</Title>
         <MemeContainer>
-          {loading && <Spinner size={300} />}
+          {loading && <Spinner size={200} />}
           {memes.length === 0 && !loading && (
             <Message>No memes available :(</Message>
           )}
@@ -73,7 +73,11 @@ const UserMemes = () => {
           ))}
         </MemeContainer>
       </Container>
-      <Snackbar open={snackbarOpen} onClose={() => setSnackbarOpen(false)}>
+      <Snackbar
+        open={snackbarOpen}
+        onClose={() => setSnackbarOpen(false)}
+        error
+      >
         Something went wrong. Try again later
       </Snackbar>
     </>

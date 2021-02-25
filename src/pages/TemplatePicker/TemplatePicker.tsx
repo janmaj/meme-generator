@@ -91,7 +91,11 @@ const TemplatePicker = ({ onPick }: Props) => {
           imageUrl={selectedTemplate?.url}
         />
       </Container>
-      <Snackbar open={snackbarOpen} onClose={() => setSnackbarOpen(false)}>
+      <Snackbar
+        open={snackbarOpen}
+        onClose={() => setSnackbarOpen(false)}
+        error
+      >
         An error ocurred. Try again later
       </Snackbar>
     </>

@@ -9,6 +9,7 @@ import Button from "../../components/Button/Button";
 import ResultModal from "./ResultModal";
 import { addCaption, saveMeme } from "../../api";
 import Snackbar from "../../components/Snackbar/Snackbar";
+import Spinner from "../../components/Spinner/Spinner";
 
 const PaddingContainer = styled(Container)`
   padding-bottom: 2em;
@@ -59,7 +60,13 @@ interface Props {
 const Editor = ({ activeTemplate }: Props) => {
   const [inputValues, setInputValues] = React.useState<string[]>([]);
   const [receivedUrl, setReceivedUrl] = React.useState<string | null>(null);
-  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+  const [snackbarState, setSnackbarState] = React.useState({
+    open: false,
+    message: "",
+    error: false,
+  });
+  const [submitLoading, setSubmitLoading] = React.useState(false);
+  const [saveLoading, setSaveLoading] = React.useState(false);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -76,21 +83,34 @@ const Editor = ({ activeTemplate }: Props) => {
 
   const handleSubmit = async () => {
     try {
+      setSubmitLoading(true);
       const url = await addCaption(activeTemplate!.id!, inputValues);
       setReceivedUrl(url);
     } catch {
-      setSnackbarOpen(true);
+      setSnackbarState({
+        open: true,
+        error: true,
+        message: "Something went wrong. Try again later",
+      });
     }
+    setSubmitLoading(false);
   };
 
   const handleSave = async () => {
     try {
       if (receivedUrl) {
+        setSaveLoading(true);
         await saveMeme(receivedUrl);
+        setSnackbarState({ message: "Meme saved", error: false, open: true });
       }
-    } catch {
-      setSnackbarOpen(true);
+    } catch (error) {
+      setSnackbarState({
+        open: true,
+        error: true,
+        message: "Something went wrong. Try again later",
+      });
     }
+    setSaveLoading(false);
   };
 
   const inputs = [];
@@ -127,7 +147,7 @@ const Editor = ({ activeTemplate }: Props) => {
             disabled={inputValues.filter((v) => v.length !== 0).length === 0}
             onClick={handleSubmit}
           >
-            Create
+            {submitLoading ? <Spinner color="#b67929" size={30} /> : "Create"}
           </Button>
         </InputContainer>
       </PaddingContainer>
@@ -137,9 +157,14 @@ const Editor = ({ activeTemplate }: Props) => {
         imageAlt={activeTemplate?.name || ""}
         onClose={() => {}}
         onSave={handleSave}
+        loading={saveLoading}
       />
-      <Snackbar open={snackbarOpen} onClose={() => setSnackbarOpen(false)}>
-        Something went wrong. Try again later
+      <Snackbar
+        open={snackbarState.open}
+        onClose={() => setSnackbarState((prev) => ({ ...prev, open: false }))}
+        error={snackbarState.error}
+      >
+        {snackbarState.message}
       </Snackbar>
     </>
   );

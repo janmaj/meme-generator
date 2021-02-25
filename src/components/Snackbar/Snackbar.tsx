@@ -1,8 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
 
-const StyledSnackbar = styled.div`
-  background-color: #e74c3c;
+const StyledSnackbar = styled.div<{ error?: boolean }>`
+  background-color: ${(props) => (props.error ? "#e74c3c" : "#5d80b6")};
   font-size: 1.25rem;
   padding: 20px 20px;
   min-width: 100px;
@@ -13,15 +13,17 @@ const StyledSnackbar = styled.div`
   color: white;
   border-radius: 8px;
   font-weight: bold;
+  box-shadow: 3px 3px 5px black;
 `;
 
 interface Props {
   children: React.ReactNode;
   open: boolean;
   onClose: () => void;
+  error?: boolean;
 }
 
-const Snackbar = ({ children, open, onClose }: Props) => {
+const Snackbar = ({ children, open, onClose, error }: Props) => {
   React.useEffect(() => {
     if (open) {
       setTimeout(() => {
@@ -30,7 +32,9 @@ const Snackbar = ({ children, open, onClose }: Props) => {
     }
   }, [onClose, open]);
 
-  return open ? <StyledSnackbar>{children}</StyledSnackbar> : null;
+  return open ? (
+    <StyledSnackbar error={error}>{children}</StyledSnackbar>
+  ) : null;
 };
 
 export default Snackbar;

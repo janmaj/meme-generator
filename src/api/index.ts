@@ -35,9 +35,9 @@ export const addCaption = async (templateId: number, captions: string[]) => {
 
   const response = await axios.post(url + queryParams);
   console.log(response);
-  // if (!response.data.data.success) {
-  //   throw new Error();
-  // }
+  if (!response.data.success) {
+    throw new Error();
+  }
   return response.data.data.url;
 };
 
@@ -46,6 +46,7 @@ export const saveMeme = async (url: string) => {
     await db.collection("memes").add({ url });
     console.log("saved");
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
