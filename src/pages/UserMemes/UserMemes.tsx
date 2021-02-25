@@ -21,6 +21,7 @@ const Title = styled.h1`
 
 const Message = styled.h2`
   text-align: center;
+  font-size: 2.5rem;
 `;
 
 const MemeContainer = styled.div`

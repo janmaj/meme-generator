@@ -17,7 +17,6 @@ const Img = styled.img`
   width: 100%;
   margin: auto;
   display: block;
-  border: 1px solid gray;
 `;
 
 const ButtonContainer = styled.div`

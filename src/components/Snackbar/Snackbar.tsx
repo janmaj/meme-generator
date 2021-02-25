@@ -2,12 +2,12 @@ import * as React from "react";
 import styled from "styled-components";
 
 const StyledSnackbar = styled.div<{ error?: boolean }>`
-  background-color: ${(props) => (props.error ? "#e74c3c" : "#5d80b6")};
+  background-color: ${(props) => (props.error ? "#e74c3c" : "#00224F")};
   font-size: 1.25rem;
-  padding: 20px 20px;
+  padding: 10px 10px;
   min-width: 100px;
   position: fixed;
-  bottom: 50px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   color: white;

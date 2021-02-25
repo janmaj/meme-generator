@@ -36,7 +36,6 @@ const Img = styled.img`
   width: 100%;
   margin: auto;
   display: block;
-  border: 1px solid gray;
   padding: 10px 15px;
 `;
 
@@ -67,6 +66,7 @@ const Editor = ({ activeTemplate }: Props) => {
   });
   const [submitLoading, setSubmitLoading] = React.useState(false);
   const [saveLoading, setSaveLoading] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -102,6 +102,7 @@ const Editor = ({ activeTemplate }: Props) => {
         setSaveLoading(true);
         await saveMeme(receivedUrl);
         setSnackbarState({ message: "Meme saved", error: false, open: true });
+        setSaved(true);
       }
     } catch (error) {
       setSnackbarState({
@@ -155,9 +156,13 @@ const Editor = ({ activeTemplate }: Props) => {
         open={receivedUrl !== null}
         imageUrl={receivedUrl!}
         imageAlt={activeTemplate?.name || ""}
-        onClose={() => {}}
+        onClose={() => {
+          setReceivedUrl(null);
+          setSaved(false);
+        }}
         onSave={handleSave}
         loading={saveLoading}
+        saved={saved}
       />
       <Snackbar
         open={snackbarState.open}

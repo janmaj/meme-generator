@@ -2,8 +2,10 @@ import * as React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
+import theme from "../../theme//theme";
+
 const Toolbar = styled.header`
-  background-color: #00243f;
+  background-color: ${theme.colors.primary.main};
   display: flex;
   align-items: center;
   flex-direction: column;

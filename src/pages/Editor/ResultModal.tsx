@@ -18,12 +18,13 @@ const Img = styled.img`
   width: 100%;
   margin: auto;
   display: block;
-  border: 1px solid gray;
 `;
 
-const StyledButton = styled(Button)`
-  display: block;
-  margin: 15px auto;
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin: 20px auto 0;
+  max-width: 20em;
 `;
 
 interface Props {
@@ -33,6 +34,7 @@ interface Props {
   onClose: () => void;
   onSave?: () => void | Promise<void>;
   loading?: boolean;
+  saved?: boolean;
 }
 
 const ResultModal = ({
@@ -42,18 +44,19 @@ const ResultModal = ({
   imageAlt,
   onSave,
   loading,
+  saved,
 }: Props) => {
   return (
     <>
       <Modal open={open} onClose={onClose} data-testid="result-modal">
         <Header>Your meme is ready</Header>
         <Img src={imageUrl} alt={imageAlt} />
-        <StyledButton onClick={onSave}>
-          {loading ? <Spinner color="#b67929" size={30} /> : "Save"}
-        </StyledButton>
-        <a href="/">
-          <StyledButton>Go back to main page</StyledButton>
-        </a>
+        <ButtonContainer>
+          <Button onClick={onClose}>Discard</Button>
+          <Button onClick={onSave} disabled={saved || loading}>
+            {loading ? <Spinner color="#b67929" size={30} /> : "Save"}
+          </Button>
+        </ButtonContainer>
       </Modal>
     </>
   );

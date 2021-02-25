@@ -1,12 +1,14 @@
 import * as React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+
+import theme from "../../theme/theme";
 
 const StyledButton = styled.button`
   padding: 10px 20px;
   min-width: 60px;
   border-radius: 10px;
   border-width: 1px;
-  background-color: #264b77;
+  background-color: ${theme.colors.primary.main};
   color: white;
   text-transform: uppercase;
   font-weight: bold;
@@ -14,19 +16,11 @@ const StyledButton = styled.button`
   cursor: pointer;
   transition: all 0.2s ease;
   &:hover {
-    background-color: #31629e;
+    background-color: #444;
   }
   &:disabled {
     background-color: #b6b6b6;
   }
-  ${(props) =>
-    props.color === "secondary" &&
-    css`
-      background-color: #723d2f;
-      &:hover {
-        background-color: #92422c;
-      }
-    `};
 `;
 
 interface Props {
