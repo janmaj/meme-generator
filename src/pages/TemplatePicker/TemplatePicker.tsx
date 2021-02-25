@@ -16,7 +16,7 @@ export interface Template {
 }
 
 interface Props {
-  onPick?: (t: Template) => void;
+  onPick: (t: Template) => void;
 }
 
 const Title = styled.h1`
@@ -62,11 +62,10 @@ const TemplatePicker = ({ onPick }: Props) => {
   const handleSelectTemplate = (template: Template) => {
     setSelectedTemplate(template);
     setModalOpen(true);
-    console.log("selected");
   };
 
   const handleConfirm = () => {
-    onPick?.(selectedTemplate!);
+    onPick(selectedTemplate!);
     history.push("/editor");
   };
 

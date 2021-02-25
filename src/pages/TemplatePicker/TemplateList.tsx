@@ -4,6 +4,11 @@ import { Template } from "./TemplatePicker";
 
 import TemplateTile from "./TemplateTile";
 
+const Message = styled.p`
+  text-align: center;
+  font-size: 2rem;
+`;
+
 const TemplateContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -26,16 +31,19 @@ interface Props {
 }
 
 const TemplateList = ({ templates, onSelect }: Props) => {
-  return (
+  return templates.length > 0 ? (
     <TemplateContainer>
       {templates.map((template) => (
         <TemplateTile
           imageUrl={template.url}
           key={template.id}
           onClick={() => onSelect?.(template)}
+          imageAlt={template.name}
         />
       ))}
     </TemplateContainer>
+  ) : (
+    <Message>No templates available</Message>
   );
 };
 

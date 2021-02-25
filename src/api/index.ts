@@ -19,7 +19,6 @@ export const addCaption = async (templateId: number, captions: string[]) => {
   });
 
   const response = await axios.post(url + queryParams);
-  console.log(response);
 
   if (!response.data.success) {
     throw new Error();

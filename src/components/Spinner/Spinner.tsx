@@ -25,7 +25,7 @@ interface Props {
 }
 
 const Spinner = ({ size }: Props) => {
-  return <SpinnerElement size={size} />;
+  return <SpinnerElement data-testid="spinner" size={size} />;
 };
 
 export default Spinner;

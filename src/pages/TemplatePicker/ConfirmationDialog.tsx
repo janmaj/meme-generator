@@ -32,13 +32,20 @@ interface Props {
   onClose: () => void;
   onConfirm: () => void;
   imageUrl?: string;
+  imageAlt?: string;
 }
 
-const ConfirmationDialog = ({ open, onClose, imageUrl, onConfirm }: Props) => {
+const ConfirmationDialog = ({
+  open,
+  onClose,
+  imageUrl,
+  onConfirm,
+  imageAlt,
+}: Props) => {
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} data-testid="confirmation-dialog">
       <Header>Do you want to use this template?</Header>
-      <Img src={imageUrl || ""} />
+      <Img src={imageUrl || ""} alt={imageAlt} />
       <ButtonContainer>
         <Button color="secondary" onClick={onClose}>
           Cancel
