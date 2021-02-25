@@ -30,13 +30,15 @@ interface Props {
   imageAlt: string;
   open: boolean;
   onClose: () => void;
+  onSave?: () => void | Promise<void>;
 }
 
-const ResultModal = ({ imageUrl, open, onClose, imageAlt }: Props) => {
+const ResultModal = ({ imageUrl, open, onClose, imageAlt, onSave }: Props) => {
   return (
     <Modal open={open} onClose={onClose} data-testid="result-modal">
       <Header>Your meme is ready</Header>
       <Img src={imageUrl} alt={imageAlt} />
+      <StyledButton onClick={onSave}>Save</StyledButton>
       <a href="/">
         <StyledButton>Go back to main page</StyledButton>
       </a>

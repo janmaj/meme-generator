@@ -7,7 +7,7 @@ import InputField from "../../components/InputField/InputField";
 import Container from "../../components/Container/Container";
 import Button from "../../components/Button/Button";
 import ResultModal from "./ResultModal";
-import { addCaption } from "../../api";
+import { addCaption, saveMeme } from "../../api";
 
 const PaddingContainer = styled(Container)`
   padding-bottom: 2em;
@@ -77,6 +77,12 @@ const Editor = ({ activeTemplate }: Props) => {
     setReceivedUrl(url);
   };
 
+  const handleSave = async () => {
+    if (receivedUrl) {
+      await saveMeme(receivedUrl);
+    }
+  };
+
   const inputs = [];
   if (activeTemplate) {
     for (let i = 0; i < activeTemplate.boxCount!; i++) {
@@ -120,6 +126,7 @@ const Editor = ({ activeTemplate }: Props) => {
         imageUrl={receivedUrl!}
         imageAlt={activeTemplate?.name || ""}
         onClose={() => {}}
+        onSave={handleSave}
       />
     </>
   );

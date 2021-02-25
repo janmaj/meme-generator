@@ -1,12 +1,38 @@
 import * as React from "react";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 const Toolbar = styled.header`
   background-color: #00243f;
-  height: 100px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex-direction: column;
+  padding: 10px 0;
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledNavLink = styled(NavLink)`
+  color: white;
+  font-size: 1.5rem;
+  margin: 0 30px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &.active {
+    text-decoration: underline;
+  }
+
+  &:hover {
+    color: #8d8d8d;
+  }
+  @media (max-width: 400px) {
+    font-size: 1rem;
+    margin: 0 15px;
+  }
 `;
 
 const Logo = styled.div`
@@ -27,7 +53,15 @@ const Logo = styled.div`
 const Navbar = () => {
   return (
     <Toolbar>
-      <Logo>MayMay Generator !!!1!!11</Logo>
+      <Logo>Meme Generator</Logo>
+      <Nav>
+        <StyledNavLink to="/" exact>
+          Create a new meme
+        </StyledNavLink>
+        <StyledNavLink to="/memes" exact>
+          Browse
+        </StyledNavLink>
+      </Nav>
     </Toolbar>
   );
 };

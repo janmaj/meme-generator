@@ -5,6 +5,7 @@ import TemplatePicker, {
   Template,
 } from "./pages/TemplatePicker/TemplatePicker";
 import Editor from "./pages/Editor/Editor";
+import UserMemes from "./pages/UserMemes/UserMemes";
 import Navbar from "./components/Navbar/Navbar";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           exact
           render={() => <Editor activeTemplate={activeTemplate} />}
         />
+        <Route path="/memes" exact component={UserMemes} />
       </Switch>
     </div>
   );

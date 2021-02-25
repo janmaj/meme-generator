@@ -6,7 +6,7 @@ import Container from "../../components/Container/Container";
 import TemplateList from "./TemplateList";
 import ConfirmationDialog from "./ConfirmationDialog";
 import Spinner from "../../components/Spinner/Spinner";
-import { fetchAll } from "../../api";
+import { fetchAllTemplates } from "../../api";
 
 export interface Template {
   id: number;
@@ -50,7 +50,7 @@ const TemplatePicker = ({ onPick }: Props) => {
   React.useEffect(() => {
     const fetchTemplates = async () => {
       setLoading(true);
-      const fetchedTemplates = await fetchAll();
+      const fetchedTemplates = await fetchAllTemplates();
 
       setTemplates(fetchedTemplates);
       setLoading(false);
