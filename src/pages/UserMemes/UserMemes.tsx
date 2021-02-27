@@ -6,6 +6,8 @@ import Spinner from "../../components/Spinner/Spinner";
 import Snackbar from "../../components/Snackbar/Snackbar";
 import Pagination from "../../components/Pagination/Pagination";
 
+const ITEMS_PER_PAGE = 10;
+
 const Title = styled.h1`
   text-align: center;
   font-family: "Titillium Web", sans-serif;
@@ -49,6 +51,7 @@ const UserMemes = () => {
   const [memes, setMemes] = React.useState<Meme[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+  const [page, setPage] = React.useState(1);
 
   React.useEffect(() => {
     const fetchMemes = async () => {
@@ -61,6 +64,11 @@ const UserMemes = () => {
     fetchMemes();
   }, []);
 
+  const memesOnPage = memes.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE
+  );
+
   return (
     <>
       <Container>
@@ -70,11 +78,15 @@ const UserMemes = () => {
           {memes.length === 0 && !loading && (
             <Message>No memes available :(</Message>
           )}
-          {memes.map((meme) => (
+          {memesOnPage.map((meme) => (
             <Img src={meme.url} alt={meme.id} key={meme.id} />
           ))}
         </MemeContainer>
-        <Pagination current={0} maxPage={5} onSelect={() => {}} />
+        <Pagination
+          current={page}
+          maxPage={Math.ceil(memes.length / ITEMS_PER_PAGE)}
+          onSelect={(num) => setPage(num)}
+        />
       </Container>
       <Snackbar
         open={snackbarOpen}

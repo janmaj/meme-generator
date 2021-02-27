@@ -36,7 +36,7 @@ interface Props {
 const comp = ({ maxPage, current, onSelect }: Props) => {
   const paginationNumbers: number[] = [];
   for (
-    let i = Math.max(current - 3, 0);
+    let i = Math.max(current - 3, 1);
     i <= Math.min(current + 3, maxPage);
     i++
   ) {
