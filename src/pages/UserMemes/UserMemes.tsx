@@ -4,6 +4,7 @@ import Container from "../../components/Container/Container";
 import { fetchAllMemes } from "../../api";
 import Spinner from "../../components/Spinner/Spinner";
 import Snackbar from "../../components/Snackbar/Snackbar";
+import Pagination from "../../components/Pagination/Pagination";
 
 const Title = styled.h1`
   text-align: center;
@@ -73,6 +74,7 @@ const UserMemes = () => {
             <Img src={meme.url} alt={meme.id} key={meme.id} />
           ))}
         </MemeContainer>
+        <Pagination current={0} maxPage={5} onSelect={() => {}} />
       </Container>
       <Snackbar
         open={snackbarOpen}
